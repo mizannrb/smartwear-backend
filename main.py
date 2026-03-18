@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from routers import products, auth, users, categories  # ← categories যোগ করো
+from routers import products, auth, users, categories
 
 app = FastAPI(
     title="SmartWear API",
@@ -10,7 +10,11 @@ app = FastAPI(
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5173"],
+    allow_origins=[
+        "http://localhost:5173",
+        "https://smartwear-frontend-ml8z.vercel.app",
+        "https://smartwear-frontend.vercel.app",
+    ],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -20,7 +24,7 @@ app.add_middleware(
 app.include_router(products.router)
 app.include_router(auth.router)
 app.include_router(users.router)
-app.include_router(categories.router)  # ← এই লাইনটা যোগ করো
+app.include_router(categories.router)
 
 @app.get("/", tags=["Home"])
 def home():
